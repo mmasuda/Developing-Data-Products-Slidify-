@@ -5,10 +5,10 @@
 
 ####This presentation is designed to show how effective compulsory wearing of seat belts decreased fatal accidents in Great Britain.It consisted of 4 parts.  
 <h4>
-* Observation from dataset [Seatbelts](http://stat.ethz.ch/R-manual/R-patched/library/datasets/html/UKDriverDeaths.html)  
-* Machine learning model  
-* Interactive report(including a Shiny interactive report)  
-* Conclusion  
+- Observation from dataset [Seatbelts](http://stat.ethz.ch/R-manual/R-patched/library/datasets/html/UKDriverDeaths.html)  
+- Machine learning model  
+- Interactive report(including a Shiny interactive report)  
+- Conclusion  
 </h4>  
 ####Shiny and Shiny app, which are main part of this presentation, enable to make report using R interactive and to distribute it on the Web.  
 ####Slidify together with gh-pages enable Web slide of the report incorporating Shiny app.  
