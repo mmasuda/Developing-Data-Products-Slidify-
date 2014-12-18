@@ -1,0 +1,54 @@
+---
+title       : Road Casualties in Great Britain 1969-84
+subtitle    : a shiny app to show interactively effect by compulsory wearing of seat belts
+author      : Masuda.Michinori
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Observation from dataset    
+- [Seatbelts](http://stat.ethz.ch/R-manual/R-patched/library/datasets/html/UKDriverDeaths.html) gives the monthly totals of car drivers in Great Britain killed or seriously injured Jan 1969 to Dec 1984. Compulsory wearing of seat belts was introduced on 31 Jan 1983.  
+- Seasonal variation:show one year periodicity.     
+- Long term variability:decrease step-wise and largely decrease at 1983(law introduction). 
+- Should normalized by kms(distance driven):increase thorughout the survey period.
+```{r,echo=FALSE,fig.height=5,fig.width=12,fig.align='center'}
+time_series <-  Seatbelts[,-7]
+time_series <-  time_series[,-6]
+plot(time_series)
+```
+
+--- .class #id 
+
+## Machine learning model
+
+-  one year periodicity confirmed by auto-covariance/correlation, so use AutoRegressive model
+```{r,echo=FALSE,fig.height=3.2,fig.width=12,fig.align='center'}
+par(mfrow = c(1, 2))
+DriverKilled <-  Seatbelts[,1]
+acf(DriverKilled); pacf(DriverKilled)
+beforelaw <- window((Seatbelts[,1]/Seatbelts[,5]*1000),end = 1983)
+fit <- arima(beforelaw, c(1, 0, 0), seasonal = list(order = c(1, 0, 0)))
+fit
+```
+
+--- .class #id   
+
+## Interactive report : please run it in the next page!
+
+- Show multiple results in one page:react to the selected radio button(DriverKilled/drivers/front/rear), draw time series plot of survey data(1969-1984) and predicted data with -2se, +2se(1983 to 1984).
+- Control model parameter:react to the selected slider(period for machine learning),calculate prediction and figure out the difference between survey and predicted data after law introduction. This feature is helpful to see how much long term variability(step-wise decrements) affects the difference.   
+  
+## Conclusion
+
+- For three numbers;DriverKilled/drivers/front/, the result shows that compulsory wearing of seat belts decreased fatal accidents in Great Britain. The ratio of the difference between survey and prediction to prediction is under -20% and survey data locates near -2se.
+- For rear number, the ratio is -10% to +1%, but survey data locates between mean prediction and -2se. So, the law doesn't have an effect on fatal accidents decrements.  
+
+--- .class #id 
+
+<iframe src="http://mmasuda.shinyapps.io/Seatbelts/"></iframe>
+

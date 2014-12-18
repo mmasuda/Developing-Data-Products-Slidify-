@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Road Casualties in Great Britain 1969-84</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Road Casualties in Great Britain 1969-84">
+  <meta name="author" content="Masuda.Michinori">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Road Casualties in Great Britain 1969-84</h1>
+    <h2>a shiny app to show interactively effect by compulsory wearing of seat belts</h2>
+    <p>Masuda.Michinori<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Observation from dataset</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><a href="http://stat.ethz.ch/R-manual/R-patched/library/datasets/html/UKDriverDeaths.html">Seatbelts</a> gives the monthly totals of car drivers in Great Britain killed or seriously injured Jan 1969 to Dec 1984. Compulsory wearing of seat belts was introduced on 31 Jan 1983.<br></li>
+<li>Seasonal variation:show one year periodicity.<br></li>
+<li>Long term variability:decrease step-wise and largely decrease at 1983(law introduction). </li>
+<li>Should normalized by kms(distance driven):increase thorughout the survey period.
+<img src="assets/fig/unnamed-chunk-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" style="display: block; margin: auto;" /></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Machine learning model</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li> one year periodicity confirmed by auto-covariance/correlation, so use AutoRegressive model
+<img src="assets/fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" /></li>
+</ul>
+
+<pre><code>## 
+## Call:
+## arima(x = beforelaw, order = c(1, 0, 0), seasonal = list(order = c(1, 0, 0)))
+## 
+## Coefficients:
+##         ar1   sar1  intercept
+##       0.391  0.717      9.021
+## s.e.  0.094  0.071      0.565
+## 
+## sigma^2 estimated as 2.19:  log likelihood = -310.4,  aic = 628.9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Interactive report : please run it in the next page!</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Show multiple results in one page:react to the selected radio button(DriverKilled/drivers/front/rear), draw time series plot of survey data(1969-1984) and predicted data with -2se, +2se(1983 to 1984).</li>
+<li>Control model parameter:react to the selected slider(period for machine learning),calculate prediction and figure out the difference between survey and predicted data after law introduction. This feature is helpful to see how much long term variability(step-wise decrements) affects the difference.<br></li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<ul>
+<li>For three numbers;DriverKilled/drivers/front/, the result shows that compulsory wearing of seat belts decreased fatal accidents in Great Britain. The ratio of the difference between survey and prediction to prediction is under -20% and survey data locates near -2se.</li>
+<li>For rear number, the ratio is -10% to +1%, but survey data locates between mean prediction and -2se. So, the law doesn&#39;t have an effect on fatal accidents decrements.<br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <article data-timings="">
+    <iframe src="http://mmasuda.shinyapps.io/Seatbelts/"></iframe>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Observation from dataset'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Machine learning model'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Interactive report : please run it in the next page!'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
